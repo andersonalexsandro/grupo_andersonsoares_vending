@@ -1,0 +1,40 @@
+# ============================================================
+# Setup do Synopsys Design Compiler (lido automaticamente pelo dc_shell)
+# ============================================================
+
+# Diretório de onde o dc_shell é executado (a raiz do hello-world)
+set ROOT_DIR [pwd]
+
+# Onde o DC procura RTL e bibliotecas (relativo ao ROOT_DIR)
+set_app_var search_path [list \
+    $ROOT_DIR \
+    $ROOT_DIR/rtl \
+    $ROOT_DIR/libs \
+]
+
+# Biblioteca alvo (standard cells do PDK SAED32).
+# ATENCAO: usar o .db que existir no servidor. Ajustar se o nome/caminho
+# for diferente do esperado.
+set_app_var target_library [list \
+    saed32rvt_tt1p05v25c.db \
+]
+
+# Link library: '*' (designs em memoria) + target + DesignWare
+set_app_var link_library [concat \
+    "*" \
+    $target_library \
+    [list dw_foundation.sldb] \
+]
+
+# DesignWare (IPs otimizados: somadores, multiplicadores, etc.)
+set_app_var synthetic_library [list \
+    dw_foundation.sldb \
+]
+
+# Biblioteca WORK (designs compilados durante a sessao)
+define_design_lib WORK -path ./work
+
+# Configuracoes de SystemVerilog / DRC
+set hdlin_enable_rtldrc_info true   ;# mensagens detalhadas de RTL DRC
+set hdlin_check_no_latch     true   ;# avisa se inferir latch
+set compile_autonogate       true   ;# desabilita clock gating automatico

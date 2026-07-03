@@ -1,0 +1,77 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="Diagrama de estados" id="estados-vending">
+    <mxGraphModel dx="1050" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="FSM de Moore - Controlador de Vending Machine" style="text;html=1;align=center;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="330" y="10" width="470" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Rotulo do estado: NOME (encoding) / saidas de Moore ativas" style="text;html=1;align=center;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="330" y="40" width="470" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Estados -->
+        <mxCell id="s_idle" value="IDLE (000)&#10;-" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s_collect" value="COLLECT (001)&#10;credit_load" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="270" y="220" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s_check" value="CHECK (010)&#10;mem_read" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="480" y="220" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s_dispense" value="DISPENSE (011)&#10;dispense, mem_write" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="690" y="90" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s_change" value="CHANGE (100)&#10;change_out, credit_clr" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="920" y="90" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s_error" value="ERROR (101)&#10;error" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="690" y="350" width="150" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Transicoes -->
+        <mxCell id="t_start" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=none;" edge="1" parent="1" source="lbl_reset" target="s_idle">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_reset" value="reset" style="text;html=1;align=center;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="140" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t1" value="coin_in != 00" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_idle" target="s_collect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" value="coin_in != 00" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_collect" target="s_collect">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="180" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3" value="confirm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_collect" target="s_check">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" value="can_sell" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_check" target="s_dispense">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t5" value="!can_sell" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;" edge="1" parent="1" source="s_check" target="s_error">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t6" value="(sempre)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_dispense" target="s_change">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t7" value="(sempre)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_change" target="s_idle">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t8" value="cancel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;" edge="1" parent="1" source="s_error" target="s_idle">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Nota -->
+        <mxCell id="note" value="cancel ou rst (de qualquer estado) -&gt; IDLE e zera o credito" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="440" width="340" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

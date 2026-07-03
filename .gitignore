@@ -1,0 +1,44 @@
+# ============================================================
+# Artefatos de simulacao (VCS / Icarus / GTKWave)
+# ============================================================
+build/
+*.vcd
+*.fst
+*.out
+a.out
+*_sim
+simv
+simv.*
+csrc/
+*.daidir/
+novas*/
+AN.DB
+ucli.key
+.vlogan*
+*.fsdb
+*.vpd
+*.log
+obj_dir/
+*.o
+*.vpi
+DVEfiles/
+verdi*/
+vc_hdrs.h
+
+# ============================================================
+# Artefatos de sintese (Design Compiler)
+# ============================================================
+work/
+*.rpt
+*_mapeada.*
+*_nao_mapeada.*
+*.ddc
+*.db
+command.log
+default.svf
+alib-*/
+
+# ============================================================
+# Bibliotecas / PDK (licenciadas - NUNCA versionar)
+# ============================================================
+libs/
