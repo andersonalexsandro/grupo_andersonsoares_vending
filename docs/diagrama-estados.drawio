@@ -1,75 +1,79 @@
-<mxfile host="app.diagrams.net" type="device">
+<mxfile host="app.diagrams.net">
   <diagram name="Diagrama de estados" id="estados-vending">
-    <mxGraphModel dx="1050" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+    <mxGraphModel dx="1653" dy="765" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="720" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-
-        <mxCell id="title" value="FSM de Moore - Controlador de Vending Machine" style="text;html=1;align=center;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="330" y="10" width="470" height="30" as="geometry" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;fontStyle=1;fontSize=16;" value="FSM de Moore — Controlador de Vending Machine" vertex="1">
+          <mxGeometry height="30" width="440" x="430" y="10" as="geometry" />
         </mxCell>
-        <mxCell id="subtitle" value="Rotulo do estado: NOME (encoding) / saidas de Moore ativas" style="text;html=1;align=center;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
-          <mxGeometry x="330" y="40" width="470" height="20" as="geometry" />
+        <mxCell id="subtitle" parent="1" style="text;html=1;align=center;fontSize=11;fontColor=#666666;" value="Rótulo do estado: NOME (encoding) / saídas de Moore ativas" vertex="1">
+          <mxGeometry height="20" width="440" x="430" y="42" as="geometry" />
         </mxCell>
-
-        <!-- Estados -->
-        <mxCell id="s_idle" value="IDLE (000)&#10;-" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="60" y="220" width="140" height="70" as="geometry" />
+        <mxCell id="init" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="30" y="230" as="geometry" />
         </mxCell>
-        <mxCell id="s_collect" value="COLLECT (001)&#10;credit_load" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="270" y="220" width="140" height="70" as="geometry" />
+        <mxCell id="s_idle" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="IDLE (000)&#xa;—" vertex="1">
+          <mxGeometry height="90" width="150" x="90" y="195" as="geometry" />
         </mxCell>
-        <mxCell id="s_check" value="CHECK (010)&#10;mem_read" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="480" y="220" width="140" height="70" as="geometry" />
+        <mxCell id="s_collect" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="COLLECT (001)&#xa;credit_load" vertex="1">
+          <mxGeometry height="90" width="150" x="340" y="195" as="geometry" />
         </mxCell>
-        <mxCell id="s_dispense" value="DISPENSE (011)&#10;dispense, mem_write" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="690" y="90" width="150" height="70" as="geometry" />
+        <mxCell id="s_check" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="CHECK (010)&#xa;mem_read" vertex="1">
+          <mxGeometry height="90" width="150" x="590" y="195" as="geometry" />
         </mxCell>
-        <mxCell id="s_change" value="CHANGE (100)&#10;change_out, credit_clr" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="920" y="90" width="150" height="70" as="geometry" />
+        <mxCell id="s_dispense" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="DISPENSE (011)&#xa;dispense, mem_write" vertex="1">
+          <mxGeometry height="90" width="150" x="840" y="195" as="geometry" />
         </mxCell>
-        <mxCell id="s_error" value="ERROR (101)&#10;error" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="690" y="350" width="150" height="70" as="geometry" />
+        <mxCell id="s_change" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="CHANGE (100)&#xa;change_out, credit_clr" vertex="1">
+          <mxGeometry height="90" width="150" x="1090" y="195" as="geometry" />
         </mxCell>
-
-        <!-- Transicoes -->
-        <mxCell id="t_start" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=none;" edge="1" parent="1" source="lbl_reset" target="s_idle">
+        <mxCell id="s_error" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="ERROR (101)&#xa;error" vertex="1">
+          <mxGeometry height="90" width="150" x="590" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" value="cancel ou rst (de qualquer estado) → IDLE e zera o crédito" vertex="1">
+          <mxGeometry height="70" width="360" x="850" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="e_reset" edge="1" parent="1" source="init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;fontStyle=2;fontColor=#666666;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="s_idle" value="reset">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lbl_reset" value="reset" style="text;html=1;align=center;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
-          <mxGeometry x="60" y="150" width="140" height="20" as="geometry" />
-        </mxCell>
-
-        <mxCell id="t1" value="coin_in != 00" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_idle" target="s_collect">
+        <mxCell id="e1" edge="1" parent="1" source="s_idle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="s_collect" value="coin_in ≠ 00">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="t2" value="coin_in != 00" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_collect" target="s_collect">
+        <mxCell id="e_self" edge="1" parent="1" source="s_collect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=0.3;exitY=0;entryX=0.7;entryY=0;" target="s_collect" value="coin_in ≠ 00">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="340" y="180" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="385" y="150" />
+              <mxPoint x="445" y="150" />
+            </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="t3" value="confirm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_collect" target="s_check">
+        <mxCell id="e3" edge="1" parent="1" source="s_collect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="s_check" value="confirm">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="t4" value="can_sell" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_check" target="s_dispense">
+        <mxCell id="e4" edge="1" parent="1" source="s_check" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="s_dispense" value="can_sell">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="t5" value="!can_sell" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;" edge="1" parent="1" source="s_check" target="s_error">
+        <mxCell id="e6" edge="1" parent="1" source="s_dispense" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="s_change" value="sempre">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="t6" value="(sempre)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_dispense" target="s_change">
+        <mxCell id="e5" edge="1" parent="1" source="s_check" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;strokeColor=#b85450;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="s_error" value="!can_sell">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="t7" value="(sempre)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s_change" target="s_idle">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e7" edge="1" parent="1" source="s_change" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=0.5;exitY=0;entryX=0.5;entryY=0;" target="s_idle" value="sempre">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1165" y="90" />
+              <mxPoint x="165" y="90" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="t8" value="cancel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;" edge="1" parent="1" source="s_error" target="s_idle">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- Nota -->
-        <mxCell id="note" value="cancel ou rst (de qualquer estado) -&gt; IDLE e zera o credito" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="270" y="440" width="340" height="40" as="geometry" />
+        <mxCell id="e8" edge="1" parent="1" source="s_error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;strokeColor=#b85450;exitX=0;exitY=0.5;entryX=0.5;entryY=1;" target="s_idle" value="cancel">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="165" y="485" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

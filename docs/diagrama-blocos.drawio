@@ -1,134 +1,218 @@
-<mxfile host="app.diagrams.net" type="device">
+<mxfile host="app.diagrams.net">
   <diagram name="Diagrama de blocos" id="blocos-vending">
-    <mxGraphModel dx="1050" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+    <mxGraphModel dx="1884" dy="799" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="760" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-
-        <mxCell id="title" value="Vending Machine - Diagrama de blocos" style="text;html=1;align=center;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="360" y="10" width="380" height="30" as="geometry" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;fontStyle=1;fontSize=16;" value="Vending Machine — Diagrama de blocos" vertex="1">
+          <mxGeometry height="30" width="440" x="380" y="10" as="geometry" />
         </mxCell>
-
-        <!-- Entradas -->
-        <mxCell id="in_coin" value="coin_in[1:0]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="40" y="70" width="110" height="30" as="geometry" />
+        <mxCell id="in_coin" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="coin_in[1:0]" vertex="1">
+          <mxGeometry height="36" width="120" x="40" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="in_sel" value="sel_item[1:0]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="40" y="120" width="110" height="30" as="geometry" />
+        <mxCell id="in_sel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="sel_item[1:0]" vertex="1">
+          <mxGeometry height="36" width="120" x="40" y="170" as="geometry" />
         </mxCell>
-        <mxCell id="in_confirm" value="confirm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="40" y="170" width="110" height="30" as="geometry" />
+        <mxCell id="in_confirm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="confirm" vertex="1">
+          <mxGeometry height="36" width="120" x="40" y="470" as="geometry" />
         </mxCell>
-        <mxCell id="in_cancel" value="cancel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="40" y="220" width="110" height="30" as="geometry" />
+        <mxCell id="in_cancel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="cancel" vertex="1">
+          <mxGeometry height="36" width="120" x="40" y="540" as="geometry" />
         </mxCell>
-        <mxCell id="in_clk" value="clk" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="40" y="270" width="110" height="30" as="geometry" />
+        <mxCell id="in_clk" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="clk" vertex="1">
+          <mxGeometry height="36" width="120" x="40" y="610" as="geometry" />
         </mxCell>
-        <mxCell id="in_rst" value="rst" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="40" y="320" width="110" height="30" as="geometry" />
+        <mxCell id="in_rst" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="rst" vertex="1">
+          <mxGeometry height="36" width="120" x="40" y="680" as="geometry" />
         </mxCell>
-
-        <!-- Blocos do datapath -->
-        <mxCell id="b_credit" value="credit_reg&#10;(registrador de credito, 8b)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="230" y="55" width="160" height="70" as="geometry" />
+        <mxCell id="b_credit" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="credit_reg&#xa;(registrador de crédito, 8b)" vertex="1">
+          <mxGeometry height="70" width="180" x="260" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="b_mem" value="memory&#10;(4 x 16: price, stock)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="230" y="330" width="160" height="70" as="geometry" />
+        <mxCell id="b_mem" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="memory&#xa;(4 × 16: price, stock)" vertex="1">
+          <mxGeometry height="70" width="180" x="260" y="230" as="geometry" />
         </mxCell>
-        <mxCell id="b_cmp" value="comparator&#10;can_sell" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="470" y="150" width="150" height="60" as="geometry" />
+        <mxCell id="b_cmp" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="comparator&#xa;can_sell" vertex="1">
+          <mxGeometry height="64" width="180" x="520" y="110" as="geometry" />
         </mxCell>
-        <mxCell id="b_sub" value="subtractor&#10;change = credit - price" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="470" y="330" width="150" height="60" as="geometry" />
+        <mxCell id="b_sub" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="subtractor&#xa;change = credit − price" vertex="1">
+          <mxGeometry height="64" width="180" x="520" y="240" as="geometry" />
         </mxCell>
-
-        <!-- Unidade de controle -->
-        <mxCell id="b_fsm" value="control_unit&#10;&#10;FSM de Moore&#10;(6 estados)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="690" y="150" width="170" height="200" as="geometry" />
+        <mxCell id="b_fsm" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;verticalAlign=top;spacingTop=20;" value="control_unit&#xa;&#xa;FSM de Moore&#xa;(6 estados)" vertex="1">
+          <mxGeometry height="320" width="200" x="760" y="90" as="geometry" />
         </mxCell>
-
-        <!-- Saidas -->
-        <mxCell id="out_disp" value="dispense" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="960" y="120" width="120" height="30" as="geometry" />
+        <mxCell id="out_disp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="dispense" vertex="1">
+          <mxGeometry height="36" width="150" x="1060" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="out_change" value="change_out[7:0]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="960" y="170" width="120" height="30" as="geometry" />
+        <mxCell id="out_change" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="change_out[7:0]" vertex="1">
+          <mxGeometry height="36" width="150" x="1060" y="170" as="geometry" />
         </mxCell>
-        <mxCell id="out_err" value="error" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="960" y="220" width="120" height="30" as="geometry" />
+        <mxCell id="out_err" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="error" vertex="1">
+          <mxGeometry height="36" width="150" x="1060" y="240" as="geometry" />
         </mxCell>
-        <mxCell id="out_disp2" value="display[7:0]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="960" y="270" width="120" height="30" as="geometry" />
+        <mxCell id="out_display" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="display[7:0]" vertex="1">
+          <mxGeometry height="36" width="150" x="1060" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="out_state" value="state_out[2:0]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="960" y="320" width="120" height="30" as="geometry" />
+        <mxCell id="out_state" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="state_out[2:0]" vertex="1">
+          <mxGeometry height="36" width="150" x="1060" y="380" as="geometry" />
         </mxCell>
-
-        <!-- Arestas: entradas -> datapath -->
-        <mxCell id="e1" value="coin_value" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="in_coin" target="b_credit">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_coin" edge="1" parent="1" source="in_coin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="b_credit" value="coin_value">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="108" />
+              <mxPoint x="210" y="125" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e2" value="addr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="in_sel" target="b_mem">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_sel" edge="1" parent="1" source="in_sel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="b_mem" value="addr">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="188" />
+              <mxPoint x="210" y="265" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-
-        <!-- entradas de controle -> FSM -->
-        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="in_confirm" target="b_fsm">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_confirm" edge="1" parent="1" source="in_confirm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.75;" target="b_fsm" value="confirm">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="488" />
+              <mxPoint x="700" y="330" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="in_cancel" target="b_fsm">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_cancel" edge="1" parent="1" source="in_cancel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.9;" target="b_fsm" value="cancel">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="558" />
+              <mxPoint x="720" y="378" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" edge="1" parent="1" source="in_clk" target="b_fsm">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_clk" edge="1" parent="1" source="in_clk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;exitX=1;exitY=0.5;entryX=0.3;entryY=1;" target="b_fsm" value="clk">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="628" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" edge="1" parent="1" source="in_rst" target="b_fsm">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_rst" edge="1" parent="1" source="in_rst" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;exitX=1;exitY=0.5;entryX=0.6;entryY=1;" target="b_fsm" value="rst">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="698" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-
-        <!-- datapath interno -->
-        <mxCell id="e7" value="credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_credit" target="b_cmp">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_credit_cmp" edge="1" parent="1" source="b_credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" target="b_cmp" value="credit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="111" />
+              <mxPoint x="480" y="129" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e8" value="credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_credit" target="b_sub">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_credit_sub" edge="1" parent="1" source="b_credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.7;entryX=-0.002;entryY=0.463;entryDx=0;entryDy=0;entryPerimeter=0;" target="b_sub" value="credit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="466" y="139" />
+              <mxPoint x="466" y="270" />
+              <mxPoint x="520" y="270" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e9" value="price, stock" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_mem" target="b_cmp">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mem_cmp" edge="1" parent="1" source="b_mem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.4;entryX=0;entryY=0.7;" target="b_cmp" value="price, stock">
+          <mxGeometry relative="1" x="0.2227" y="-6" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="494" y="258" />
+              <mxPoint x="494" y="155" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e10" value="price" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_mem" target="b_sub">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mem_sub" edge="1" parent="1" source="b_mem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.7;entryX=0;entryY=0.7;" target="b_sub" value="price">
+          <mxGeometry relative="1" x="0.3023" y="5" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="440" y="285" />
+              <mxPoint x="505" y="285" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-
-        <!-- datapath -> FSM e saidas -->
-        <mxCell id="e11" value="can_sell" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_cmp" target="b_fsm">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_cmp_fsm" edge="1" parent="1" source="b_cmp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.15;" target="b_fsm" value="can_sell">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="142" />
+              <mxPoint x="730" y="138" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e12" value="change" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_sub" target="out_change">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_sub_change" edge="1" parent="1" source="b_sub" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="out_change" value="change">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="272" />
+              <mxPoint x="730" y="430" />
+              <mxPoint x="1000" y="430" />
+              <mxPoint x="1000" y="188" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-
-        <!-- FSM -> controle (feedback) -->
-        <mxCell id="e13" value="credit_load / credit_clr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="b_fsm" target="b_credit">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_fb_credit" edge="1" parent="1" source="b_fsm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;strokeColor=#d79b00;exitX=0.1;exitY=0;entryX=0.5;entryY=0;" target="b_credit" value="credit_load / credit_clr">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="780" y="55" />
+              <mxPoint x="350" y="55" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e14" value="mem_read / mem_write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="b_fsm" target="b_mem">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_fb_mem" edge="1" parent="1" source="b_fsm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;strokeColor=#d79b00;exitX=0;exitY=0.95;entryX=0;entryY=0.5;" target="b_mem" value="mem_read / mem_write">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="394" />
+              <mxPoint x="240" y="265" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-
-        <!-- FSM -> saidas -->
-        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_fsm" target="out_disp">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_credit_display" edge="1" parent="1" source="b_credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.9;entryX=0;entryY=0.5;" target="out_display" value="display = credit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="452" y="153" />
+              <mxPoint x="452" y="460" />
+              <mxPoint x="1030" y="460" />
+              <mxPoint x="1030" y="328" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_fsm" target="out_err">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_disp" edge="1" parent="1" source="b_fsm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.1;entryX=0;entryY=0.5;" target="out_disp" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1015" y="122" />
+              <mxPoint x="1015" y="118" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_fsm" target="out_state">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_err" edge="1" parent="1" source="b_fsm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="out_err" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1015" y="250" />
+              <mxPoint x="1015" y="258" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e18" value="display = credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="b_credit" target="out_disp2">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_state" edge="1" parent="1" source="b_fsm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.9;entryX=0;entryY=0.5;" target="out_state" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1015" y="378" />
+              <mxPoint x="1015" y="398" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IMX0jZzgxmzRY_LfHRYm-20" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;strokeColor=#d79b00;entryX=0.999;entryY=0.209;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" target="b_fsm" value="Change_load">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1140" y="170" />
+              <mxPoint x="1140" y="157" />
+            </Array>
+            <mxPoint x="1140" y="170" as="sourcePoint" />
+            <mxPoint x="770" y="95" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
