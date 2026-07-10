@@ -204,7 +204,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IMX0jZzgxmzRY_LfHRYm-20" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;strokeColor=#d79b00;entryX=0.999;entryY=0.209;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" target="b_fsm" value="Change_load">
+        <mxCell id="IMX0jZzgxmzRY_LfHRYm-20" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;dashed=1;strokeColor=#d79b00;entryX=0.999;entryY=0.209;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" target="b_fsm" value="change_load / refund_load">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1140" y="170" />
@@ -212,6 +212,15 @@
             </Array>
             <mxPoint x="1140" y="170" as="sourcePoint" />
             <mxPoint x="770" y="95" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_credit_change" edge="1" parent="1" source="b_credit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jumpStyle=arc;jumpSize=8;exitX=1;exitY=0.6;entryX=0.5;entryY=1;" target="out_change" value="credit (devolução)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="132" />
+              <mxPoint x="480" y="450" />
+              <mxPoint x="1135" y="450" />
+            </Array>
           </mxGeometry>
         </mxCell>
       </root>
