@@ -88,10 +88,11 @@ flowchart LR
 
     cmp -->|can_sell| fsm
     sub -->|change| o_change
+    credit -->|credit (devolução)| o_change
 
-    fsm -.->|credit_load| credit
+    fsm -.->|credit_load / credit_clr| credit
     fsm -.->|mem_read / mem_write| mem
-    fsm -.->|change_load| o_change
+    fsm -.->|change_load / refund_load| o_change
     fsm --> o_disp
     fsm --> o_err
     fsm --> o_state
@@ -128,25 +129,27 @@ flowchart LR
 | --- | --- | --- | --- |
 | `dispense` | 1 b | Combinacional | **Pulso de exatamente 1 ciclo**: manda liberar o produto |
 | `error` | 1 b | Combinacional | Sem estoque ou crédito insuficiente |
-| `change_out` | 8 b | Registrada | Troco em centavos (`credit − price`); **carregada por `change_load`** ao entrar em CHANGE |
+| `change_out` | 8 b | Registrada | Troco (`credit − price`, via `change_load` em CHANGE) **ou** devolução total (`credit`, via `refund_load` no `cancel`, com prioridade) |
 | `display` | 8 b | Registrada | Crédito acumulado atual (para um display externo) |
 | `state_out` | 3 b | Registrada | Estado corrente da FSM — usada para depuração e pelo testbench |
 
-> Como é uma **FSM de Moore**, todas as saídas são função **apenas do estado
-> atual**. `dispense` e `error` são decodificados combinacionalmente do estado;
-> `change_out`, `display` e `state_out` ficam em registradores. O `change_out`
-> tem carga **condicional**: a FSM ativa `change_load` só em CHANGE para capturar
-> o troco (por isso ele aparece como seta de controle no diagrama de blocos).
+> Como é uma **FSM de Moore**, as saídas dependem essencialmente do estado atual.
+> `dispense` e `error` são decodificados combinacionalmente do estado (e forçados
+> a 0 por `cancel`); `change_out`, `display` e `state_out` ficam em registradores.
+> O `change_out` tem **duas fontes de carga**: `change_load` (troco, em CHANGE) e
+> `refund_load` (devolução total do crédito, no `cancel`, com **prioridade**) — por
+> isso ambas aparecem como setas de controle `FSM → change_out` no diagrama de blocos.
 
 ### 2.2 Os blocos do *datapath*, um a um
 
 **`credit_reg` — acumulador de crédito (registrador síncrono de 8 bits)**
 Guarda quanto o usuário já inseriu, em **centavos**. 8 bits sem sinal → faixa de
 **0 a 255**, suficiente para o item mais caro (100) e para acumular até R$2,55.
-É controlado pelo sinal `credit_load` vindo da FSM:
-- `credit_load=1` **em COLLECT** → `credit ← credit + coin_value` (acumula a moeda);
-- `credit_load=1` **em CHANGE** → `credit ← 0` (zera após entregar o troco);
-- `cancel` ou `rst` → `credit ← 0`.
+É controlado por dois sinais da FSM, com prioridade `rst` > `credit_clr` > `credit_load`:
+- `credit_load=1` **em COLLECT** (e na 1ª moeda, ainda em IDLE) → `credit ← credit + coin_value` (acumula a moeda);
+- `credit_clr=1` **em CHANGE** → `credit ← 0` (zera após entregar o troco);
+- `credit_clr=1` **no `cancel`** → `credit ← 0` (zera ao cancelar);
+- `rst` → `credit ← 0` (reset global).
 
 A conversão `coin_in → coin_value` é uma tabela fixa (ponto fixo em centavos):
 
@@ -209,8 +212,10 @@ datapath. Entendê-los é entender o projeto:
 | `stock` | `memory` → `comparator` | Estoque do item selecionado |
 | `can_sell` | `comparator` → FSM | "Pode vender?" (crédito ok **e** estoque > 0) |
 | `change` | `subtractor` → `change_out` | Troco calculado |
-| `credit_load` | FSM → `credit_reg` | Ordena somar a moeda (COLLECT) ou zerar (CHANGE) |
-| `change_load` | FSM → `change_out` | Ordena capturar (registrar) o troco (CHANGE) |
+| `credit_load` | FSM → `credit_reg` | Ordena **somar** a moeda ao crédito (COLLECT; e a 1ª moeda em IDLE) |
+| `credit_clr` | FSM → `credit_reg` | **Zera** o crédito (em CHANGE e no `cancel`) |
+| `change_load` | FSM → `change_out` | Ordena capturar (registrar) o **troco** (`credit − price`, em CHANGE) |
+| `refund_load` | FSM → `change_out` | Ordena registrar a **devolução total** (`change_out ← credit`, no `cancel`; prioridade sobre `change_load`) |
 | `mem_read` | FSM → `memory` | Ordena ler `price`/`stock` (CHECK) |
 | `mem_write` | FSM → `memory` | Ordena decrementar o estoque (DISPENSE) |
 
@@ -236,7 +241,7 @@ flowchart LR
     COLLECT(("COLLECT (001)<br/>credit_load")):::act
     CHECK(("CHECK (010)<br/>mem_read")):::act
     DISPENSE(("DISPENSE (011)<br/>dispense<br/>mem_write")):::act
-    CHANGE(("CHANGE (100)<br/>change_load<br/>credit_load")):::act
+    CHANGE(("CHANGE (100)<br/>change_load<br/>credit_clr")):::act
     ERROR(("ERROR (101)<br/>error")):::err
 
     init -->|reset| IDLE
@@ -247,7 +252,7 @@ flowchart LR
     CHECK -->|!can_sell| ERROR
     DISPENSE -->|sempre| CHANGE
     CHANGE -->|sempre| IDLE
-    ERROR -->|cancel| IDLE
+    ERROR -->|cancel / refund_load, credit_clr| IDLE
 
     classDef start fill:#000000,stroke:#000000,color:#ffffff;
     classDef idle  fill:#dae8fc,stroke:#6c8ebf,color:#000;
@@ -257,8 +262,10 @@ flowchart LR
 
 </details>
 
-> **Reset global:** `cancel` ou `rst` em qualquer estado leva a `IDLE` e zera o
-> crédito — por isso não desenhamos uma seta saindo de cada estado.
+> **Override global:** `cancel` ou `rst` em qualquer estado leva a `IDLE` — por
+> isso não desenhamos uma seta saindo de cada estado. O `cancel` **devolve** o
+> crédito (`refund_load`: `change_out ← credit`) e o zera (`credit_clr`); o `rst`
+> zera tudo (crédito e `change_out`), sem devolução.
 
 ### 3.1 Os estados, um a um
 
@@ -268,8 +275,8 @@ flowchart LR
 | **COLLECT** | `001` | `coin_in ≠ 00` (vindo de IDLE **ou** do próprio COLLECT) | `credit_load` | Acumula: `credit ← credit + coin_value` |
 | **CHECK** | `010` | `confirm=1` em COLLECT | `mem_read` | Lê `price`/`stock`; no ciclo seguinte avalia `can_sell` |
 | **DISPENSE** | `011` | `can_sell=1` em CHECK | `dispense` (1 ciclo), `mem_write` | Libera o produto e decrementa o estoque |
-| **CHANGE** | `100` | sempre, logo após DISPENSE | `change_load`, `credit_load` (=zera) | Registra o troco (`change_out`) e zera o crédito |
-| **ERROR** | `101` | `can_sell=0` em CHECK | `error` | Sinaliza falha; espera `cancel` para voltar (devolução do crédito: ⚠️ ver ponto em aberto no Cenário 3) |
+| **CHANGE** | `100` | sempre, logo após DISPENSE | `change_load`, `credit_clr` | Registra o troco (`change_out`) e zera o crédito |
+| **ERROR** | `101` | `can_sell=0` em CHECK | `error` | Sinaliza falha; espera `cancel`, que devolve o crédito (via `refund_load`, `change_out ← credit`) e volta a IDLE |
 
 ### 3.2 As transições, uma a uma
 
@@ -284,21 +291,27 @@ flowchart LR
 | 7 | `DISPENSE → CHANGE` | sempre | Depois de liberar, sempre calcula troco |
 | 8 | `CHANGE → IDLE` | sempre | Troco entregue, crédito zerado, fim do ciclo |
 | 9 | `ERROR → IDLE` | `cancel` | Usuário reconhece o erro e recupera o crédito |
-| — | `qualquer → IDLE` | `cancel`/`rst` | Reset global: volta ao início e zera o crédito |
+| — | `cancel` (qualquer estado) → IDLE | `cancel` | Override: devolve o crédito (`refund_load`) e o zera (`credit_clr`) |
+| — | `rst` (qualquer estado) → IDLE | `rst` | Reset global: zera crédito e `change_out`, sem devolução |
 
 ### 3.3 Tabela de saídas por estado (decodificação de Moore)
 
 Esta é a "cara" de uma FSM de Moore — a saída é uma função direta do estado.
 Útil para conferir o RTL e para explicar ao professor de forma compacta:
 
-| Estado | `credit_load` | `mem_read` | `mem_write` | `dispense` | `error` | `change_load` |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: |
-| IDLE | 0 | 0 | 0 | 0 | 0 | 0 |
-| COLLECT | **1** | 0 | 0 | 0 | 0 | 0 |
-| CHECK | 0 | **1** | 0 | 0 | 0 | 0 |
-| DISPENSE | 0 | 0 | **1** | **1** | 0 | 0 |
-| CHANGE | **1** (zera) | 0 | 0 | 0 | 0 | **1** |
-| ERROR | 0 | 0 | 0 | 0 | **1** | 0 |
+| Estado | `credit_load` | `credit_clr` | `mem_read` | `mem_write` | `dispense` | `error` | `change_load` | `refund_load` |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| IDLE | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| COLLECT | **1** | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| CHECK | 0 | 0 | **1** | 0 | 0 | 0 | 0 | 0 |
+| DISPENSE | 0 | 0 | 0 | **1** | **1** | 0 | 0 | 0 |
+| CHANGE | 0 | **1** | 0 | 0 | 0 | 0 | **1** | 0 |
+| ERROR | 0 | 0 | 0 | 0 | 0 | **1** | 0 | 0 |
+
+> **`cancel` (override global, qualquer estado):** força `credit_clr=1` e
+> `refund_load=1` (e `next_state=IDLE`) — zera o crédito e o devolve via
+> `change_out ← credit`. Por depender da entrada `cancel`, é um comportamento tipo
+> Mealy; por isso não é uma linha de estado, mas uma regra que vale sobre todos.
 
 ### 3.4 A sutileza do tempo (leitura síncrona da memória)
 
@@ -357,18 +370,12 @@ COLLECT --coin_in=11-> COLLECT   credit: 100 → 200   (self-loop)
 COLLECT --cancel-->    IDLE      devolve o crédito (change_out=200); credit → 0
 ```
 
-> ⚠️ **Ponto em aberto (decidir antes do RTL/testbench).** O enunciado espera
-> `change_out=200` aqui, mas o `cancel` vai de COLLECT direto para IDLE **sem
-> passar por CHANGE** — e `change_out` só é carregado por `change_load`, que só
-> ativa em CHANGE. Além disso, o subtrator produz `credit − price`, não o
-> reembolso `credit`. O mesmo vale para o estado **ERROR** (o enunciado, na
-> seção 6, diz "crédito devolvido via `change_out`"). Ou seja, o enunciado
-> sobrecarrega `change_out` com dois sentidos — *troco* (em CHANGE) e *reembolso*
-> (em cancel/ERROR) — e o datapath desenhado não produz o segundo. Resolver exige
-> uma decisão de projeto (ex.: um mux `credit`/`credit − price` + `change_load`
-> também no cancel/ERROR, possivelmente um estado REFUND — o que tensiona o "6
-> estados"; ou tratar o reembolso como devolução física, deixando `change_out`
-> inalterado). **Confirmar a intenção com o professor.**
+> **Como foi resolvido no RTL.** O `cancel` vai de COLLECT direto a IDLE (sem
+> passar por CHANGE), mas a devolução acontece mesmo assim: a FSM ativa
+> `refund_load`, e o registrador `change_out` recebe **`credit`** (não
+> `credit − price`) por essa via, com **prioridade** sobre `change_load`. Assim
+> `change_out=200` é produzido no `cancel` sem criar um estado novo — mantêm-se os
+> 6 estados. O mesmo vale para o `cancel` a partir de ERROR.
 
 ### Cenário 4 — Estoque zerado
 Comprar café 5 vezes (estoque inicial = 5), depois tentar a 6ª. Esperado: na 6ª,
@@ -404,11 +411,13 @@ O enunciado (item 10.4) pede justificar as decisões. As principais:
 4. **Subtrator nunca subtrai a mais:** como o comparador garante
    `credit >= price` antes de DISPENSE, o `change` (8 bits sem sinal) nunca
    estoura para negativo. Segurança por construção, não por sorte.
-5. **`change_out` registrada (carga condicional):** o troco é capturado por um
-   registrador de saída só quando a FSM ativa `change_load` (estado CHANGE), e é
-   mantido até a próxima operação. Registrar — em vez de expor o subtrator direto
-   na saída — garante um troco estável e válido exatamente no ciclo certo. É por
-   isso que aparece uma seta de controle `FSM → change_out` no diagrama de blocos.
+5. **`change_out` registrada (duas fontes de carga):** o registrador de saída é
+   carregado em dois casos — `change_load` captura o **troco** (`credit − price`)
+   em CHANGE, e `refund_load` captura a **devolução total** (`credit`) no `cancel`,
+   com prioridade sobre `change_load`. Registrar — em vez de expor o subtrator
+   direto na saída — garante um valor estável e válido no ciclo certo. É por isso
+   que `change_load / refund_load` aparecem como setas de controle `FSM → change_out`
+   no diagrama de blocos.
 6. **Memória síncrona:** modela uma SRAM real e força o tratamento explícito da
    latência de leitura de 1 ciclo (seção 3.4) — mais realista que uma ROM
    combinacional.
@@ -431,11 +440,14 @@ O enunciado (item 10.4) pede justificar as decisões. As principais:
 > 0)`. Se der 1, a FSM vai a DISPENSE, emite o pulso `dispense` e decrementa o
 > estoque; depois vai a CHANGE, onde um **subtrator** entrega o troco `credit −
 > price` e o crédito é zerado. Se `can_sell` for 0, vai a ERROR e espera
-> `cancel`. Um `cancel` ou `rst` em qualquer estado devolve o crédito e volta a
-> IDLE. O ponto fino é que a memória é **síncrona**: o preço e o estoque só
+> `cancel`. Um `cancel` em qualquer estado **devolve o crédito** (via `refund_load`:
+> `change_out ← credit`) e volta a IDLE; um `rst` também volta a IDLE, mas **zera
+> tudo** (crédito e `change_out`), sem devolução. O ponto fino é que a memória é
+> **síncrona**: o preço e o estoque só
 > chegam um ciclo depois de `mem_read`, e a FSM decide com base nesse valor."
 
 ---
 
 *Estrutura completa dos módulos RTL a implementar: [enunciado.md](enunciado.md)
-(seção 11). Ferramentas do fluxo: [tecnologias.md](tecnologias.md).*
+(seção 11). Ferramentas do fluxo e como rodar (local e servidor): ver o
+[README](../README.md).*
