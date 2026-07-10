@@ -1,0 +1,23 @@
+{
+  // ============================================================
+  // Diagnosticos de Verilog no editor (extensao mshr-h.veriloghdl)
+  // ============================================================
+  // A extensao tem DOIS motores independentes:
+  //   1) slang-server  -> language server (LIGADO por padrao). Era a fonte do
+  //      "unknown module 'hello'" e do prompt ".slang/server.json": ele analisa
+  //      cada .sv isolado e nao acha modulos definidos em outro arquivo.
+  //   2) linter externo -> verilator/iverilog/... (desligado por padrao).
+  //
+  // Desligamos os dois -> nenhum erro/aviso de Verilog no editor.
+  // Isso NAO afeta compilacao/simulacao: a checagem real continua no
+  // `make sim-local` (Icarus, local) e no VCS/Design Compiler (servidor).
+  "verilog.slangServer.enabled": false,
+  "verilog.linting.linter": "none"
+
+  // ------------------------------------------------------------
+  // Para reativar o slang-server DEPOIS (com analise cruzada correta, sem o
+  // falso "unknown module"), rode o comando da extensao:
+  //   Ctrl+Shift+P -> "Verilog: Configure Slang Project"
+  // Ele cria um .slang/server.json apontando para os arquivos do projeto.
+  // Ai troque a linha acima por  "verilog.slangServer.enabled": true.
+}
